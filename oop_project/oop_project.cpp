@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <string>
 #include <fstream>
@@ -6,7 +6,7 @@
 #include <conio.h>
 using namespace std;
 
-bool is_email_valid(string& email) //email matching
+bool is_email_valid(string& email)  // e mail validation icin gerekli olan fonksiyon
 {
 	// define a regular expression
 	const regex pattern
@@ -16,7 +16,7 @@ bool is_email_valid(string& email) //email matching
 	return regex_match(email, pattern);
 }
 
-string getpass(const char* prompt, bool show_asterisk = true)
+string getpass(const char* prompt, bool show_asterisk = true) // sifre maskeleme icin gerekli olan fonksiyon
 {
 	const char BACKSPACE = 8;
 	const char RETURN = 13;
@@ -59,24 +59,6 @@ string getpass(const char* prompt, bool show_asterisk = true)
 }
 
 
-
-
-
-void password()
-{
-	char pw[8], ch;
-	int i;
-	cout << "Lutfen 8 karakter uzunluktaki sifrenizi giriniz" << endl;
-	for (i = 0; i < 8; i++)
-	{
-		ch = _getch();
-		pw[i] = ch;
-		ch = '*';
-		cout << "" << ch;
-	}
-	cout << endl << "parolaniz: " << pw;
-
-}
 
 class Zaman
 {
@@ -191,7 +173,7 @@ void ad_soyad()
 	getline(cin, ad_soyad);
 
 	fstream kullanicilar;
-	kullanicilar.open("kullanicilar.txt", ios::out);
+	kullanicilar.open("kullanicilar.txt", ios::app);
 	if (kullanicilar.is_open())
 	{
 		kullanicilar << ad_soyad;
@@ -213,7 +195,7 @@ void tel_no()
 	if (kullanicilar.is_open())
 	{
 		kullanicilar << tel_no;
-		kullanicilar << "|";
+		kullanicilar << "|"; 
 		kullanicilar.close();
 	}
 }
@@ -237,7 +219,7 @@ void kullanici_adi()
 void e_posta()
 {
 	string e_posta = "";
-	while (is_email_valid(e_posta) == true)
+	while (is_email_valid(e_posta) == false)
 	{
 		cout << "lutfen duzgun formatta e-posta adresinizi giriniz." << endl;
 		getline(cin, e_posta);
@@ -259,7 +241,7 @@ void dtarihi()
 	int ay;
 	int yil;
 
-	cout << "dogdugunuz gunu giriniz";
+	cout << "dogdugunuz gunu giriniz" << endl;
 	while (true)
 	{
 		cin >> gun;
@@ -273,7 +255,7 @@ void dtarihi()
 			break;
 		}
 	}
-	cout << "dogdugunuz ayi giriniz";
+	cout << "dogdugunuz ayi giriniz" << endl;
 	while (true)
 	{
 		cin >> ay;
@@ -287,7 +269,7 @@ void dtarihi()
 			break;
 		}
 	}
-	cout << "dogdugunuz yili girin";
+	cout << "dogdugunuz yili girin" << endl;
 	while (true)
 	{
 		cin >> yil;
@@ -315,6 +297,107 @@ void dtarihi()
 	}
 }
 
+void sifre()
+{
+	int lower = 0;
+	int upper = 0;
+	int number = 0;
+
+	while (true)
+	{
+		string password = getpass("lutfen olusturmak istediginiz sifreyi giriniz", true);
+		for (int i = 0; i < password.length(); i++)
+		{
+			if (isupper(password[i]))
+			{
+				upper = 1;
+			}
+			else if (password[i] == '0' || password[i] == '1' || password[i] == '2' || password[i] == '3' || password[i] == '4' || password[i] == '5' || password[i] == '6' || password[i] == '7' || password[i] == '8' || password[i] == '9')
+			{
+				number = 1;
+			}
+			else if (islower(password[i]))
+			{
+				lower = 1;
+			}
+		}
+		if (upper == 1 && lower == 1 && number == 1) { break; }
+		else 
+		{
+			cout << "sifre icerisinde en az bir kucuk harf, bir buyuk harf ve rakam bulunmalidir";
+			continue;
+		}
+	}
+}
+
+void adres_ilce()
+{
+	fstream kullanicilar;
+	kullanicilar.open("kullanicilar.txt", ios::app);
+	int x;
+	cout << "lutfen bulundugunuz ilcenin numarasini tuslayiniz." << endl;
+	cout << "1-Ortahisar" << endl;
+	cout << "2-Akcaabat" << endl;
+	cout << "3-Vakfikebir" << endl;
+	cout << "4-Besikduzu" << endl;
+	cout << "5-Yomra" << endl;
+	cout << "6-Arsin" << endl;
+	cout << "7-Arakli" << endl;
+	cin >> x;
+	switch (x)
+	{
+	case 1:
+		if (kullanicilar.is_open())
+		{
+			kullanicilar << "Ortahisar";
+			kullanicilar << "\n";
+			kullanicilar.close();
+		}
+	case 2:
+		if (kullanicilar.is_open())
+		{
+			kullanicilar << "Akcaabat";
+			kullanicilar << "\n";
+			kullanicilar.close();
+		}
+	case 3:
+		if (kullanicilar.is_open())
+		{
+			kullanicilar << "Vakfikebir";
+			kullanicilar << "\n";
+			kullanicilar.close();
+		}
+	case 4:
+		if (kullanicilar.is_open())
+		{
+			kullanicilar << "Besikduzu";
+			kullanicilar << "\n";
+			kullanicilar.close();
+		}
+	case 5:
+		if (kullanicilar.is_open())
+		{
+			kullanicilar << "Yomra";
+			kullanicilar << "\n";
+			kullanicilar.close();
+		}
+	case 6:
+		if (kullanicilar.is_open())
+		{
+			kullanicilar << "Arsin";
+			kullanicilar << "\n";
+			kullanicilar.close();
+		}
+	case 7:
+		if (kullanicilar.is_open())
+		{
+			kullanicilar << "Arakli";
+			kullanicilar << "\n";
+			kullanicilar.close();
+		}
+	}
+}
+
 void uye_kaydi()
 {
 	ad_soyad();
@@ -322,6 +405,8 @@ void uye_kaydi()
 	kullanici_adi();
 	e_posta();
 	dtarihi();
+	sifre();
+	adres_ilce();
 }
 
 
@@ -351,115 +436,116 @@ int main()
 	//}
 
 
-	while (true)
-	{
-		int x;
-		cout << "Lutfen Gitmek Istediginiz Secenegi Tuslayiniz\n" << endl;
-		cout << "1 - Sisteme Giris" << endl;
-		cout << "2 - Uye Kaydi" << endl;
-		cout << "3 - Cikis" << endl;
-		cin >> x;
+	//while (true)
+	//{
+	//	int x;
+	//	cout << "Lutfen Gitmek Istediginiz Secenegi Tuslayiniz\n" << endl;
+	//	cout << "1 - Sisteme Giris" << endl;
+	//	cout << "2 - Uye Kaydi" << endl;
+	//	cout << "3 - Cikis" << endl;
+	//	cin >> x;
 
-		switch (x)
-		{
-		case 1: //sisteme giris
-			int x;
-			cout << "1 - Yonetici Girisi" << endl;
-			cout << "2 - Musteri Girisi" << endl;
-			cout << "3 - Ust Menuye Geri Don" << endl;
-			cin >> x;
-			switch (x)
-			{
-			case 1: //yonetici girisi //kullanicilar.txt'den okunacak
-				int x;
-				cout << "1 - Kiyafet Urun Girisi" << endl;
-				cout << "2 - Sisteme Kurye Ekleme" << endl;
-				cout << "3 - Sikayet ve Oneri Okuma" << endl;
-				cout << "4 - Indirim Kodu Tanimlama" << endl;
-				cout << "5 - Siparislerin Faturalarini Goruntuleme" << endl;
-				cout << "6 - Ust Menuye Geri Don" << endl;
-				cin >> x;
-				switch (x)
-				{
-				case 1:
-					//kiyafet kategorilerinin yer aldigi dosyalara urun girisi yaptirilmasi
-					break;
-				case 2:
-					//sisteme kurye eklenmesi
-					break;
-				case 3:
-					//sikayet ve onerilerin okunmasi
+	//	switch (x)
+	//	{
+	//	case 1: //sisteme giris
+	//		int x;
+	//		cout << "1 - Yonetici Girisi" << endl;
+	//		cout << "2 - Musteri Girisi" << endl;
+	//		cout << "3 - Ust Menuye Geri Don" << endl;
+	//		cin >> x;
+	//		switch (x)
+	//		{
+	//		case 1: //yonetici girisi //kullanicilar.txt'den okunacak
+	//			int x;
+	//			cout << "1 - Kiyafet Urun Girisi" << endl;
+	//			cout << "2 - Sisteme Kurye Ekleme" << endl;
+	//			cout << "3 - Sikayet ve Oneri Okuma" << endl;
+	//			cout << "4 - Indirim Kodu Tanimlama" << endl;
+	//			cout << "5 - Siparislerin Faturalarini Goruntuleme" << endl;
+	//			cout << "6 - Ust Menuye Geri Don" << endl;
+	//			cin >> x;
+	//			switch (x)
+	//			{
+	//			case 1:
+	//				//kiyafet kategorilerinin yer aldigi dosyalara urun girisi yaptirilmasi
+	//				break;
+	//			case 2:
+	//				//sisteme kurye eklenmesi
+	//				break;
+	//			case 3:
+	//				//sikayet ve onerilerin okunmasi
 
-					break;
-				case 4:
-					//kullaniciya inidirim kodu tanimlanmasi
-					break;
-				case 5:
-					//yapilan siparislerin faturalarinin goruntulenmesi
-					break;
-				case 6:
-					//Ust Menuye Geri Donus
-					break;
-				default:
-					break;
-				}
-				break;
-			case 2: //musteri girisi //kullanicilar.txt'den okunacak
-				int y;
-				cout << "1 - Kiyafetler" << endl;
-				cout << "2 - Siparis Takip" << endl;
-				cout << "3 - Sikayet ve Oneri" << endl;
-				cout << "4 - Sifre Degistir" << endl;
-				cout << "5 - Ust Menuye Geri Don" << endl;
-				cin >> y;
-				switch (y)
-				{
-				case 1:
-					//elbise,tisort,pantolon,gomlek,etek,ayakkabi } 6 kategori
-					//bu kategorideki urun ve urun bilgileri gosterilecek
-					//kullanici istedigi secimleri yapabilecek
-					//birden cok kiyafet secebilir
-					//sectikten sonra kiyafet ozellestir menusu acilacak ve buradaki renk ve beden bilgisine gore secimi tamamlayacaktir
-					//tum secimler tamamlaninca fatura olusturulacak // Fatura: Musteri adi, urun siparis zamanim siparis bilgileri, fiyat bilgisi.
-					break;
-				case 2:
-					//siparis bilgileri ve siparisin ulasim suresi gosterilecek
-					//ulasim suresi: yoneticinin belirledigi kurye sayisi ve gonderilecek adrese gore ayarlanacaktir
-					break;
-				case 3:
-					//Musterilerin feedback'i oneri.txt dosyasina yazilacak
-					//feedbackler yonetici tarafindan goruntulenebilecek
-					break;
-				case 4:
-					//musteri kendi sifresini degistirebilecek
-					break;
-				case 5:
-					//Ust Menuye Geri Donus
-					break;
-				default:
-					break;
-				}
-				break;
-			case 3:
-				//Ust Menuye Geri Donus
-				break;
-			default:
-				break;
-			}
-			break;
-		case 2: //uye kaydi
-			//musterilerin gerekli bilgileri alinarak kullanicilar.txt'ye yazilacak
-			//girilen e-posta'nin gecerliligi test edilecek
-			//girilien gun, ay, yil'in uygun formatta yazildigi kontrol edilecek
-			//sifre belirlenirken sifre yerine ekranda * gosterilecek
-			//musteriye "guclu sifre" girdirmek zorunlu kildirilacak
-			break;
-		case 3:
-			//programdan cikis
-			break;
-		default:
-			break;
-		}
-	}
+	//				break;
+	//			case 4:
+	//				//kullaniciya inidirim kodu tanimlanmasi
+	//				break;
+	//			case 5:
+	//				//yapilan siparislerin faturalarinin goruntulenmesi
+	//				break;
+	//			case 6:
+	//				//Ust Menuye Geri Donus
+	//				break;
+	//			default:
+	//				break;
+	//			}
+	//			break;
+	//		case 2: //musteri girisi //kullanicilar.txt'den okunacak
+	//			int y;
+	//			cout << "1 - Kiyafetler" << endl;
+	//			cout << "2 - Siparis Takip" << endl;
+	//			cout << "3 - Sikayet ve Oneri" << endl;
+	//			cout << "4 - Sifre Degistir" << endl;
+	//			cout << "5 - Ust Menuye Geri Don" << endl;
+	//			cin >> y;
+	//			switch (y)
+	//			{
+	//			case 1:
+	//				//elbise,tisort,pantolon,gomlek,etek,ayakkabi } 6 kategori
+	//				//bu kategorideki urun ve urun bilgileri gosterilecek
+	//				//kullanici istedigi secimleri yapabilecek
+	//				//birden cok kiyafet secebilir
+	//				//sectikten sonra kiyafet ozellestir menusu acilacak ve buradaki renk ve beden bilgisine gore secimi tamamlayacaktir
+	//				//tum secimler tamamlaninca fatura olusturulacak // Fatura: Musteri adi, urun siparis zamanim siparis bilgileri, fiyat bilgisi.
+	//				break;
+	//			case 2:
+	//				//siparis bilgileri ve siparisin ulasim suresi gosterilecek
+	//				//ulasim suresi: yoneticinin belirledigi kurye sayisi ve gonderilecek adrese gore ayarlanacaktir
+	//				break;
+	//			case 3:
+	//				//Musterilerin feedback'i oneri.txt dosyasina yazilacak
+	//				//feedbackler yonetici tarafindan goruntulenebilecek
+	//				break;
+	//			case 4:
+	//				//musteri kendi sifresini degistirebilecek
+	//				break;
+	//			case 5:
+	//				//Ust Menuye Geri Donus
+	//				break;
+	//			default:
+	//				break;
+	//			}
+	//			break;
+	//		case 3:
+	//			//Ust Menuye Geri Donus
+	//			break;
+	//		default:
+	//			break;
+	//		}
+	//		break;
+	//	case 2: //uye kaydi
+	//		//musterilerin gerekli bilgileri alinarak kullanicilar.txt'ye yazilacak
+	//		//girilen e-posta'nin gecerliligi test edilecek
+	//		//girilien gun, ay, yil'in uygun formatta yazildigi kontrol edilecek
+	//		//sifre belirlenirken sifre yerine ekranda * gosterilecek
+	//		//musteriye "guclu sifre" girdirmek zorunlu kildirilacak
+	//		break;
+	//	case 3:
+	//		//programdan cikis
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//}
+uye_kaydi();
 
 }
