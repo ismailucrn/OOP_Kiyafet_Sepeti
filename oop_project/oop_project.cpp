@@ -103,52 +103,16 @@ private:
 	string dtarihi;
 	vector <string> to_txt;
 public:
-	void set_kullanici_adi(string kullanici_adi)
-	{
-		this->kullanici_adi = kullanici_adi;
-		to_txt.push_back(this->kullanici_adi);
-	}
-	string get_kullanici_adi()
-	{
-		return this->kullanici_adi;
-	}
-	void set_eposta(string eposta)
-	{
-		this->eposta = eposta;
-		//to_txt'ye pushlanmasi gerek
-	}
-	string get_eposta()
-	{
-		return this->eposta;
-	}
-	void set_adres_ilce(string ilce)
-	{
-		this->adres_ilce = ilce;
-		//to_txt'ye pushlanmasi gerek
-		//trabzon ilce adresleri arasinda olmasi gerek
-	}
-	string get_adres_ilce()
-	{
-		return this->adres_ilce;
-	}
-	void set_sifre(string sifre)
-	{
-		this->sifre = sifre;
-		to_txt.push_back(this->sifre);
-	}
-	string get_sifre()
-	{
-		return this->sifre;
-	}
-	void set_dtarihi(string gun, string ay,string yil)
-	{
-		this->dtarihi = gun + "/" + ay + "/" + yil;
-		to_txt.push_back(this->dtarihi);
-	}
-	string get_dtarihi()
-	{
-		return this->dtarihi;
-	}
+	void set_kullanici_adi(string kullanici_adi);
+	string get_kullanici_adi();
+	void set_eposta(string eposta);
+	string get_eposta();
+	void set_adres_ilce(string ilce);
+	string get_adres_ilce();
+	void set_sifre(string sifre);
+	string get_sifre();
+	void set_dtarihi(string gun, string ay, string yil);
+	string get_dtarihi();
 };
 
 //////////////////////////////////////////////////////////////////////////////////
