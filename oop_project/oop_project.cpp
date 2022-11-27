@@ -58,6 +58,22 @@ string getpass(const char* prompt, bool show_asterisk = true) // sifre maskeleme
 
 }
 
+vector<string> splitstr(string str, string deli = " ") // split fonksiyonu
+{
+	vector<string> liste;
+	int start = 0;
+	int end = str.find(deli);
+	while (end != -1) {
+		liste.push_back(str.substr(start, end - start));
+		start = end + deli.size();
+		end = str.find(deli, start);
+	}
+	liste.push_back(str.substr(start, end - start));
+	return liste;
+}
+
+
+
 
 
 class Zaman
@@ -73,12 +89,21 @@ class Kiyafet
 private:
 	string kategori;
 	double fiyat;
-	string kiyafet_adi;
+	int kiyafet_adi;
 	string boyut;
 	string renk;
 public:
 	Kiyafet();
 };
+
+class Siparis : public Kiyafet
+{
+	int siparis_no;
+	double siparis_fiyat;
+	Zaman siparis_baslangic;
+	Zaman siparis_ulasim_zaman;
+};
+
 
 class Kisi
 {
@@ -90,6 +115,7 @@ public:
 	string get_ad_soyad();
 	void set_telno();
 	int get_telno();
+	Kisi();
 };
 /////////////////////////////////////////////////////////////////////////////
 class Kullanici : public Kisi
@@ -101,18 +127,7 @@ private:
 	string sifre;
 	string indirim_kodu;
 	string dtarihi;
-	vector <string> to_txt;
 public:
-	void set_kullanici_adi(string kullanici_adi);
-	string get_kullanici_adi();
-	void set_eposta(string eposta);
-	string get_eposta();
-	void set_adres_ilce(string ilce);
-	string get_adres_ilce();
-	void set_sifre(string sifre);
-	string get_sifre();
-	void set_dtarihi(string gun, string ay, string yil);
-	string get_dtarihi();
 };
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -124,7 +139,8 @@ private:
 
 class Kurye : Kisi
 {
-
+	Zaman dagitim_bitisler;
+	int siparis_numaralari;
 };
 
 
@@ -373,7 +389,59 @@ void uye_kaydi()
 	adres_ilce();
 }
 
+/////////////////////////////////////////////// uye kaydi kismi bitti
 
+vector<vector<string>> kullanici_list;
+void kullanici_txt() // kullanici txt parser.
+{
+	fstream myFile;
+	myFile.open("kullanicilar.txt", ios::in);
+	if (myFile.is_open())
+	{
+		string line;
+		while (getline(myFile, line))
+		{
+			kullanici_list.push_back(splitstr(line, "|"));
+		}
+		myFile.close();
+	}
+}
+
+void musteri_giris()
+{
+	int k_flag=0; //kullanici adi flag
+	int p_flag=0; //password flag
+	while (true)
+	{
+		cout << "lutfen kullanici adinizi giriniz" << endl;
+		string kullanici_adi;
+		getline(cin, kullanici_adi);
+		string password = getpass("lutfen sifrenizi giriniz", true);
+		for (int i = 0; i < kullanici_list.size();i++)
+		{
+			if (kullanici_adi == kullanici_list[i][2])
+			{
+				k_flag = 1;
+			}
+		}
+		for (int i = 0; i < kullanici_list.size(); i++)
+		{
+			if (password == kullanici_list[i][5])
+			{
+				p_flag = 1;
+			}
+		}
+		if (p_flag != 1 or k_flag != 1)
+		{
+			cout << "kullanici adi veya sifre hatali girilmistir lutfen tekrar deneyiniz" << endl << endl;
+			continue;
+		}
+		else 
+		{
+			break;
+		}
+	}
+}
 
 
 
@@ -385,20 +453,8 @@ void uye_kaydi()
 
 int main()
 {
-	//fstream newfile;
-	//newfile.open("test.txt", ios::in); 
-	//if (newfile.is_open())
-	//{
-	//	string tp;
-	//	/*while (getline(newfile, tp))
-	//	{
-	//		cout << tp << "\n";
-	//	}*/
-	//	getline(newfile, tp);
-	//	cout << tp;
-	//	newfile.close();
-	//}
-
+	kullanici_txt(); // kullanici txt parser.
+	musteri_giris(); 
 
 	//while (true)
 	//{
@@ -419,7 +475,7 @@ int main()
 	//		cin >> x;
 	//		switch (x)
 	//		{
-	//		case 1: //yonetici girisi //kullanicilar.txt'den okunacak
+	//		case 1: //yonetici girisi //yonetici.txt'den okunacak
 	//			int x;
 	//			cout << "1 - Kiyafet Urun Girisi" << endl;
 	//			cout << "2 - Sisteme Kurye Ekleme" << endl;
@@ -497,11 +553,7 @@ int main()
 	//		}
 	//		break;
 	//	case 2: //uye kaydi
-	//		//musterilerin gerekli bilgileri alinarak kullanicilar.txt'ye yazilacak
-	//		//girilen e-posta'nin gecerliligi test edilecek
-	//		//girilien gun, ay, yil'in uygun formatta yazildigi kontrol edilecek
-	//		//sifre belirlenirken sifre yerine ekranda * gosterilecek
-	//		//musteriye "guclu sifre" girdirmek zorunlu kildirilacak
+	//		uye_kaydi();
 	//		break;
 	//	case 3:
 	//		//programdan cikis
@@ -510,6 +562,4 @@ int main()
 	//		break;
 	//	}
 	//}
-uye_kaydi();
-
 }

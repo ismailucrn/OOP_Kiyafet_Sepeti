@@ -1,0 +1,3 @@
+Ismail Ucuran|12345678912|isolatte|ismailucuran@hotmail.com|10/12/2000|Isolatte1|Ortahisar
+Irmak Kara|12345678945|irmaksilay|irmaksilay@gmail.com|08/08/2002|Silay2|Akcaabat
+Mert Kaya|12345678978|mertkaya|mertkaya@outlook.com|01/01/2002|Mert3|Yomra
