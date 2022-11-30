@@ -74,8 +74,7 @@ vector<string> splitstr(string str, string deli = " ") // split fonksiyonu
 
 
 
-
-
+// class'lar (tam degil, duzensiz ve taslak halinde) ++++++++++
 class Zaman
 {
 private:
@@ -104,7 +103,6 @@ class Siparis : public Kiyafet
 	Zaman siparis_ulasim_zaman;
 };
 
-
 class Kisi
 {
 protected:
@@ -117,7 +115,6 @@ public:
 	int get_telno();
 	Kisi();
 };
-/////////////////////////////////////////////////////////////////////////////
 class Kullanici : public Kisi
 {
 private:
@@ -130,7 +127,6 @@ private:
 public:
 };
 
-//////////////////////////////////////////////////////////////////////////////////
 class Yonetici : public Kisi
 {
 private:
@@ -142,6 +138,9 @@ class Kurye : Kisi
 	Zaman dagitim_bitisler;
 	int siparis_numaralari;
 };
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 
 
 /////////////////////////////////////////////// uye kaydi kismi
@@ -388,9 +387,9 @@ void uye_kaydi()
 	sifre();
 	adres_ilce();
 }
-
 /////////////////////////////////////////////// uye kaydi kismi bitti
 
+//...................... kullanici ve yonetici giris ..........................
 vector<vector<string>> kullanici_list;
 void kullanici_txt() // kullanici txt parser.
 {
@@ -407,7 +406,7 @@ void kullanici_txt() // kullanici txt parser.
 	}
 }
 
-void musteri_giris()
+void musteri_girisi()
 {
 	int k_flag=0; //kullanici adi flag
 	int p_flag=0; //password flag
@@ -445,6 +444,47 @@ void musteri_giris()
 
 
 
+vector<vector<string>> yonetici_list;
+void yonetici_txt() // yonetici txt parser.
+{
+	fstream myFile;
+	myFile.open("yoneticiler.txt", ios::in);
+	if (myFile.is_open())
+	{
+		string line;
+		while (getline(myFile, line))
+		{
+			yonetici_list.push_back(splitstr(line, "|"));
+		}
+		myFile.close();
+	}
+}
+
+void yonetici_girisi()
+{
+	int p_flag = 0;
+	while (true)
+	{
+		string password = getpass("lutfen yonetici sifrenizi giriniz", true);
+		for (int i = 0; i < yonetici_list.size(); i++)
+		{
+			if (password == yonetici_list[i][2])
+			{
+				p_flag = 1;
+			}
+		}
+		if (p_flag != 1)
+		{
+			cout << "hatali sifre girdiniz lutfen tekrar giriniz." << endl << endl;
+			continue;
+		}
+		else
+		{
+			break;
+		}
+
+	}
+}
 
 
 
@@ -454,7 +494,7 @@ void musteri_giris()
 int main()
 {
 	kullanici_txt(); // kullanici txt parser.
-	musteri_giris(); 
+	musteri_girisi(); 
 
 	//while (true)
 	//{
