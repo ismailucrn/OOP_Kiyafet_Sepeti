@@ -164,6 +164,10 @@ public:
 	{
 		this->adres_ilce = adres_ilce;
 	}
+	void sifre_degistir(string sifre)
+	{
+		set_sifre(sifre);
+	}
 };
 
 class Yonetici : public Kisi
