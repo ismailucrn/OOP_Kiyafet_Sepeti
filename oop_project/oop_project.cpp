@@ -55,7 +55,6 @@ string getpass(const char* prompt, bool show_asterisk = true) // sifre maskeleme
 	//main'e yazilacak maskeleme islemi
 	//string password = getpass("Please enter the password: ", true); // Show asterisks
 	//cout << password << endl;
-
 }
 
 vector<string> splitstr(string str, string deli = " ") // split fonksiyonu
@@ -107,14 +106,26 @@ class Kisi
 {
 protected:
 	string ad_soyad;
-	int telno;
+	string telno;
 public:
-	void set_ad_soyad();
+	Kisi(string ad_soyad, string telno) 
+	{
+		set_ad_soyad(ad_soyad);
+		set_telno(telno);
+	}
+	void set_ad_soyad(string ad_soyad)
+	{
+		this->ad_soyad = ad_soyad;
+	}
 	string get_ad_soyad();
-	void set_telno();
-	int get_telno();
-	Kisi();
+	void set_telno(string telno)
+	{
+		this->telno = telno;
+	}
+	string get_telno();
 };
+
+
 class Kullanici : public Kisi
 {
 private:
@@ -125,6 +136,34 @@ private:
 	string indirim_kodu;
 	string dtarihi;
 public:
+	Kullanici(string ad_soyad, string telno, string kullanici_adi, string eposta, string dtarihi, string sifre, string adres_ilce) : Kisi(ad_soyad, telno)
+	{
+		set_kullanici_adi(kullanici_adi);
+		set_eposta(eposta);
+		set_dtarihi(dtarihi);
+		set_sifre(sifre);
+		set_adres_ilce(adres_ilce);
+	}
+	void set_kullanici_adi(string kullanici_adi)
+	{
+		this->kullanici_adi = kullanici_adi;
+	}
+	void set_eposta(string eposta)
+	{
+		this->eposta = eposta;
+	}
+	void set_dtarihi(string dtarihi)
+	{
+		this->dtarihi = dtarihi;
+	}
+	void set_sifre(string sifre)
+	{
+		this->sifre = sifre;
+	}
+	void set_adres_ilce(string adres_ilce)
+	{
+		this->adres_ilce = adres_ilce;
+	}
 };
 
 class Yonetici : public Kisi
@@ -408,6 +447,7 @@ void kullanici_txt() // kullanici txt parser.
 
 void musteri_girisi()
 {
+	int satir = 0;
 	int k_flag=0; //kullanici adi flag
 	int p_flag=0; //password flag
 	while (true)
@@ -428,7 +468,10 @@ void musteri_girisi()
 			if (password == kullanici_list[i][5])
 			{
 				p_flag = 1;
+
+				break;
 			}
+			satir++;
 		}
 		if (p_flag != 1 or k_flag != 1)
 		{
@@ -440,6 +483,9 @@ void musteri_girisi()
 			break;
 		}
 	}
+	Kullanici Musteri1(kullanici_list[satir][0], kullanici_list[satir][1], kullanici_list[satir][2], kullanici_list[satir][3], kullanici_list[satir][4], kullanici_list[satir][5], kullanici_list[satir][6]);
+
+	
 }
 
 
@@ -484,18 +530,44 @@ void yonetici_girisi()
 		}
 
 	}
+
 }
 
+void oneri_oku()
+{
+	fstream myFile;
+	myFile.open("oneriler.txt", ios::in);
+	if (myFile.is_open())
+	{
+		string line;
+		while (getline(myFile, line))
+		{
+			cout << line << endl;
+		}
+		myFile.close();
+	}
+}
+void oneri_yaz()
+{
+	cout << "lutfen sikayet veya onerinizi yaziniz." << endl;
+	string kullanici_adi;
+	getline(cin, kullanici_adi);
 
+	fstream myFile;
+	myFile.open("oneriler.txt", ios::app);
+	if (myFile.is_open())
+	{
+		myFile << kullanici_adi;
+	}
+}
 
 
 
 
 int main()
 {
-	kullanici_txt(); // kullanici txt parser.
-	musteri_girisi(); 
-
+	kullanici_txt();
+	musteri_girisi();
 	//while (true)
 	//{
 	//	int x;

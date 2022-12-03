@@ -1,5 +1,5 @@
 ﻿  oop_project.cpp
-C:\Users\Latte\Desktop\cpp-oop\OOP_Kiyafet_Sepeti\oop_project\oop_project.cpp(65,26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Latte\Desktop\cpp-oop\OOP_Kiyafet_Sepeti\oop_project\oop_project.cpp(68,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Latte\Desktop\cpp-oop\OOP_Kiyafet_Sepeti\oop_project\oop_project.cpp(69,30): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Latte\Desktop\cpp-oop\OOP_Kiyafet_Sepeti\oop_project\oop_project.cpp(64,26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Latte\Desktop\cpp-oop\OOP_Kiyafet_Sepeti\oop_project\oop_project.cpp(67,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Latte\Desktop\cpp-oop\OOP_Kiyafet_Sepeti\oop_project\oop_project.cpp(68,30): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   oop_project.vcxproj -> C:\Users\Latte\Desktop\cpp-oop\OOP_Kiyafet_Sepeti\oop_project\x64\Debug\oop_project.exe
