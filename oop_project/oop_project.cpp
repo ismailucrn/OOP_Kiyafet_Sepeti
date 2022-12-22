@@ -324,10 +324,10 @@ void sifre()
 	int lower = 0;
 	int upper = 0;
 	int number = 0;
-
+	string password;
 	while (true)
-	{
-		string password = getpass("lutfen olusturmak istediginiz sifreyi giriniz", true);
+	{	
+		password = getpass("lutfen olusturmak istediginiz sifreyi giriniz", true);
 		for (int i = 0; i < password.length(); i++)
 		{
 			if (isupper(password[i]))
@@ -350,6 +350,16 @@ void sifre()
 			continue;
 		}
 	}
+	fstream kullanicilar;
+	kullanicilar.open("kullanicilar.txt", ios::app);
+	if (kullanicilar.is_open())
+	{
+		kullanicilar << password;
+		kullanicilar << "|";
+		kullanicilar.close();
+	}
+
+
 }
 
 void adres_ilce()
@@ -449,6 +459,9 @@ void kullanici_txt() // kullanici txt parser.
 	}
 }
 
+//create Kullanici vector
+vector<Kullanici> kullanicilar;
+
 void musteri_girisi()
 {
 	int satir = 0;
@@ -488,10 +501,63 @@ void musteri_girisi()
 		}
 	}
 	Kullanici Musteri1(kullanici_list[satir][0], kullanici_list[satir][1], kullanici_list[satir][2], kullanici_list[satir][3], kullanici_list[satir][4], kullanici_list[satir][5], kullanici_list[satir][6]);
-
-	
+	kullanicilar.push_back(Musteri1);
+		int x;
+		cout << "Lutfen erismek istediginiz menunun numarasini tuslayiniz" << endl << endl;
+		cout << "1 - Kiyafet satin al" << endl;
+		cout << "2 - Siparis takip" << endl;
+		cout << "3 - Sikayet/Oneri yaz" << endl;
+		cout << "4 - Sifre degistir" << endl;
+		cout << "5 - Geri menu" << endl;
+		cin >> x;
+		switch (x)
+		{
+		case 1:
+			//kategoriler
+			break;
+		case 2:
+			//kategoriler
+			break;
+		case 3:
+			void oneri_yaz();
+			break;
+		{case 4:
+			int lower = 0;
+			int upper = 0;
+			int number = 0;
+			string password;
+			while (true)
+			{
+				password = getpass("lutfen olusturmak istediginiz sifreyi giriniz", true);
+				for (int i = 0; i < password.length(); i++)
+				{
+					if (isupper(password[i]))
+					{
+						upper = 1;
+					}
+					else if (password[i] == '0' || password[i] == '1' || password[i] == '2' || password[i] == '3' || password[i] == '4' || password[i] == '5' || password[i] == '6' || password[i] == '7' || password[i] == '8' || password[i] == '9')
+					{
+						number = 1;
+					}
+					else if (islower(password[i]))
+					{
+						lower = 1;
+					}
+				}
+				if (upper == 1 && lower == 1 && number == 1) { break; }
+				else
+				{
+					cout << "sifre icerisinde en az bir kucuk harf, bir buyuk harf ve rakam bulunmalidir";
+					continue;
+				}
+			}
+			Musteri1.sifre_degistir(password);
+			break; }
+		case 5:
+			//kategoriler
+			break;
+		}
 }
-
 
 
 vector<vector<string>> yonetici_list;
@@ -532,10 +598,44 @@ void yonetici_girisi()
 		{
 			break;
 		}
-
+	}
+	int x;
+	cout << "Girmek istediginiz kategoriyi belirtiniz" << endl << endl;
+	cout << "1 - Kiyafet ekleme" << endl;
+	cout << "2 - Sisteme kurye eklenmesi" << endl;
+	cout << "3 - Sikayet ve oneri okunmasi" << endl;
+	cout << "4 - Kullaniciya indirim kodu tanimlanmasi" << endl;
+	cout << "5 - Yapilan siparislerin faturalarinin goruntulenmesi" << endl;
+	cout << "6 - Geri menu" << endl;
+	cin >> x;
+	switch (x)
+	{
+	case 1:
+		//kategoriler
+		break;
+	case 2:
+		//kategoriler
+		break;
+	case 3:
+		void oneri_oku();
+		break;
+	case 4:
+		//kategoriler
+		break;
+	case 5:
+		//kategoriler
+		break;
+	case 6:
+		//kategoriler
+		break;
 	}
 
+	//create switch case
+	
+	
 }
+
+
 
 void oneri_oku()
 {
@@ -570,8 +670,9 @@ void oneri_yaz()
 
 int main()
 {
-	kullanici_txt();
-	musteri_girisi();
+	//kullanici_txt();
+	//musteri_girisi();
+	uye_kaydi();
 	//while (true)
 	//{
 	//	int x;

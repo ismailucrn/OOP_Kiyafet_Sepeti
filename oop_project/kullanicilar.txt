@@ -2,3 +2,4 @@ Ismail Ucuran|12345678912|isolatte|ismailucuran@hotmail.com|10/12/2000|Isolatte1
 Irmak Kara|12345678945|irmaksilay|irmaksilay@gmail.com|08/08/2002|Silay2|Akcaabat
 Mert Kaya|12345678978|mertkaya|mertkaya@outlook.com|01/01/2002|Mert3|Yomra
 Enes Abuzer|14785236989|crazyabuzerXX|abuzer61@hotmail.com|10/12/1989|Arakli
+Ceylan|12365478989|sakin_ceylan|wasd@hotmail.com|10/12/2001|Qwer3|Ortahisar
