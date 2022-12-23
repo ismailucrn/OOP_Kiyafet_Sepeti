@@ -6,6 +6,12 @@
 #include <conio.h>
 using namespace std;
 
+int kurye_sayisi = 0;
+void kurye_ekle(int sayi)
+{
+	kurye_sayisi = sayi;
+}
+
 bool is_email_valid(string& email)  // e mail validation icin gerekli olan fonksiyon
 {
 	// define a regular expression
@@ -74,33 +80,6 @@ vector<string> splitstr(string str, string deli = " ") // split fonksiyonu
 
 
 // class'lar (tam degil, duzensiz ve taslak halinde) ++++++++++
-class Zaman
-{
-private:
-	int saat;
-	int dakika;
-public:
-};
-
-class Kiyafet
-{
-private:
-	string kategori;
-	double fiyat;
-	int kiyafet_adi;
-	string boyut;
-	string renk;
-public:
-	Kiyafet();
-};
-
-class Siparis : public Kiyafet
-{
-	int siparis_no;
-	double siparis_fiyat;
-	Zaman siparis_baslangic;
-	Zaman siparis_ulasim_zaman;
-};
 
 class Kisi
 {
@@ -176,11 +155,7 @@ private:
 	string sifre;
 };
 
-class Kurye : Kisi
-{
-	Zaman dagitim_bitisler;
-	int siparis_numaralari;
-};
+
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -459,8 +434,7 @@ void kullanici_txt() // kullanici txt parser.
 	}
 }
 
-//create Kullanici vector
-vector<Kullanici> kullanicilar;
+//vector<Kullanici> kullanicilar;
 
 void musteri_girisi()
 {
@@ -501,8 +475,9 @@ void musteri_girisi()
 		}
 	}
 	Kullanici Musteri1(kullanici_list[satir][0], kullanici_list[satir][1], kullanici_list[satir][2], kullanici_list[satir][3], kullanici_list[satir][4], kullanici_list[satir][5], kullanici_list[satir][6]);
-	kullanicilar.push_back(Musteri1);
-		int x;
+	//kullanicilar.push_back(Musteri1);
+	int x;
+	do {
 		cout << "Lutfen erismek istediginiz menunun numarasini tuslayiniz" << endl << endl;
 		cout << "1 - Kiyafet satin al" << endl;
 		cout << "2 - Siparis takip" << endl;
@@ -554,9 +529,10 @@ void musteri_girisi()
 			Musteri1.sifre_degistir(password);
 			break; }
 		case 5:
-			//kategoriler
 			break;
 		}
+	} while (x != 5);
+
 }
 
 
@@ -614,7 +590,10 @@ void yonetici_girisi()
 		//kategoriler
 		break;
 	case 2:
-		//kategoriler
+		int sayi;
+		cout << "Sirketinizde kac kurye calisiyor" << endl;
+		cin >> sayi;
+		kurye_ekle(sayi);
 		break;
 	case 3:
 		void oneri_oku();
@@ -670,9 +649,9 @@ void oneri_yaz()
 
 int main()
 {
-	//kullanici_txt();
-	//musteri_girisi();
-	uye_kaydi();
+	kullanici_txt();
+	musteri_girisi();
+
 	//while (true)
 	//{
 	//	int x;
