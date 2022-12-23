@@ -1,17 +1,516 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 #include <string>
 #include <fstream>
 #include <regex>
 #include <conio.h>
+#include <random>
 using namespace std;
+//****Mert****
 
-int kurye_sayisi = 0;
-void kurye_ekle(int sayi)
-{
-	kurye_sayisi = sayi;
+class Kiyafet {
+private:
+	string kategori;
+	int kiyafet_adi;
+	double fiyat;
+	string boyut;
+	string renk;
+
+public:
+	Kiyafet(string kategori, int kiyafet_adi, double fiyat, string boyut, string renk) {
+		set_kategori(kategori);
+		set_kiyafet_adi(kiyafet_adi);
+		set_fiyat(fiyat);
+		set_boyut(boyut);
+		set_renk(renk);
+	}
+	void set_kategori(string kategori)
+	{
+		this->kategori = kategori;
+	}
+	void set_kiyafet_adi(int kategori)
+	{
+		this->kiyafet_adi = kiyafet_adi;
+	}
+	void set_fiyat(double fiyat)
+	{
+		this->fiyat = fiyat;
+	}
+	void set_boyut(string boyut)
+	{
+		this->boyut = boyut;
+	}
+	void set_renk(string renk)
+	{
+		this->renk = renk;
+	}
+};
+
+vector<string> kod_list;
+void kod_liste_olustur() {
+	fstream myFile;
+	myFile.open("indirimkodu.txt", ios::in);
+	if (myFile.is_open())
+	{
+		string line;
+		while (getline(myFile, line))
+		{
+			kod_list.push_back(line);
+
+
+		}
+		for (int i = 0; i < kod_list.size(); i++)
+		{
+			
+		}
+		myFile.close();
+	}
 }
 
+
+
+class Siparis {
+private:
+	int siparis_no;
+	double siparis_fiyat;
+	vector<vector<string>>urunler;
+public:
+
+	Siparis(vector<vector<string>>urunler) {
+
+		set_urunler(urunler);
+		set_siparis_fiyat();
+		set_siparis_no();
+	};
+	int get_siparis_no() {
+		return siparis_no;
+	}
+	double get_siparis_fiyat() {
+		return siparis_fiyat;
+	}
+	void set_siparis_fiyat()
+	{
+		double fiyat;
+		string kod;
+		for (int i = 0; i < urunler.size(); i++)
+		{
+			fiyat = stod(urunler[i][3]);
+
+			siparis_fiyat = fiyat + siparis_fiyat;
+		}
+
+		cout << "indirim koduna sahipseniz giriniz" << endl;
+		cin >> kod;
+		for (int i = 0; i < kod_list.size(); i++)
+		{
+			if (kod==kod_list[i]) {
+				cout << "indirim kodu dogru!" << endl;
+				siparis_fiyat = siparis_fiyat - (siparis_fiyat * 0.2);
+				break;
+			}
+			else {
+				cout << "gecersiz kod!";
+				break;
+
+			}
+		}
+
+	}
+	void set_urunler(vector<vector<string>>urunler)
+	{
+		this->urunler = urunler;
+	}
+	void set_siparis_no() {
+		random_device rd;
+		mt19937 gen(rd());
+		uniform_int_distribution<int> dist(100000, 999999);
+		int rastgele_sayi = dist(gen);
+		this->siparis_no=rastgele_sayi;
+	}
+
+	void fatura_goster() {
+		cout << "almis oldugunuz urunler" << endl;
+		for (int i = 0; i < urunler.size(); i++)
+		{
+			for (int c = 0; c < 6; c++) {
+				cout << urunler[i][c] << " ";
+
+			};
+			cout << endl << endl;
+		}
+		cout << endl << "Faturaniz:" << siparis_fiyat;
+
+
+	};
+};
+
+
+
+vector<string> splitstr(string str, string deli = " ") // split fonksiyonu
+{
+	vector<string> liste;
+	int start = 0;
+	int end = str.find(deli);
+	while (end != -1) {
+		liste.push_back(str.substr(start, end - start));
+		start = end + deli.size();
+		end = str.find(deli, start);
+	}
+	liste.push_back(str.substr(start, end - start));
+	return liste;
+
+}
+
+
+
+void kategori()
+{
+	cout << "kategori giriniz" << endl;
+	string category;
+	cin >> category;
+
+	fstream kiyafetler;
+	kiyafetler.open("kiyafetler.txt", ios::app);
+	if (kiyafetler.is_open())
+	{
+
+		kiyafetler << category;
+		kiyafetler << "|";
+		kiyafetler.close();
+	}
+
+}
+void id()
+{
+	cout << "Urun Id giriniz" << endl;
+
+	string id;
+
+	cin >> id;
+
+	fstream kiyafetler;
+	kiyafetler.open("kiyafetler.txt", ios::app);
+	if (kiyafetler.is_open())
+	{
+
+		kiyafetler << id;
+		kiyafetler << "|";
+		kiyafetler.close();
+	}
+}
+void kiyafet_adi()
+{
+	cout << "kiyafet adi giriniz" << endl;
+	string kiyafet_adi;
+	cin >> kiyafet_adi;
+
+	fstream kiyafetler;
+	kiyafetler.open("kiyafetler.txt", ios::app);
+	if (kiyafetler.is_open())
+	{
+
+		kiyafetler << kiyafet_adi;
+		kiyafetler << "|";
+		kiyafetler.close();
+	}
+}
+void fiyat()
+{
+	cout << "fiyat giriniz" << endl;
+
+	string fiyat;
+
+	cin >> fiyat;
+	double fiyat_double = stod(fiyat);
+	fstream kiyafetler;
+	kiyafetler.open("kiyafetler.txt", ios::app);
+	if (kiyafetler.is_open())
+	{
+
+		kiyafetler << fiyat_double;
+		kiyafetler << "|";
+		kiyafetler.close();
+	}
+}
+
+void boyut()
+{
+	cout << "boyut giriniz" << endl;
+
+	string boyut;
+	cin >> boyut;
+
+	fstream kiyafetler;
+	kiyafetler.open("kiyafetler.txt", ios::app);
+	if (kiyafetler.is_open())
+	{
+
+		kiyafetler << boyut;
+		kiyafetler << "|";
+		kiyafetler.close();
+	}
+}
+
+void renk()
+{
+	cout << "renk giriniz" << endl;
+
+	string renk;
+	cin >> renk;
+
+	fstream kiyafetler;
+	kiyafetler.open("kiyafetler.txt", ios::app);
+	if (kiyafetler.is_open())
+	{
+
+		kiyafetler << renk << endl;
+
+		kiyafetler.close();
+	}
+}
+
+
+
+vector<vector<string>> kiyafet_yaz(vector<vector<string>> kiyafet_list)
+{
+	fstream myFile;
+	myFile.open("kiyafetler.txt", ios::in);
+	if (myFile.is_open())
+	{
+		string line;
+		while (getline(myFile, line))
+		{
+			kiyafet_list.push_back(splitstr(line, "|"));
+
+
+		}
+		myFile.close();
+	}
+	return kiyafet_list;
+}
+void fatura_kayit(Siparis siparis,string musteri="Mert") {
+	
+	
+
+	fstream tumfaturalar;
+	tumfaturalar.open("tumfaturalar.txt", ios::app);
+	if (tumfaturalar.is_open())
+	{
+
+		tumfaturalar << siparis.get_siparis_no();tumfaturalar << "|"; tumfaturalar << siparis.get_siparis_fiyat(); tumfaturalar << "|"; tumfaturalar << musteri; tumfaturalar << "|"<<endl;
+		tumfaturalar.close();
+	}
+ }
+
+vector<vector<string>>fatura_liste;
+void faturalari_goruntule() {
+	fstream myFile;
+	myFile.open("tumfaturalar.txt", ios::in);
+	if (myFile.is_open())
+	{
+		string line;
+		while (getline(myFile, line))
+		{
+			fatura_liste.push_back(splitstr(line, "|"));
+
+
+		}
+		myFile.close();
+	}
+	cout << "Faturalar"<<endl;
+	for (int i = 0; i < fatura_liste.size(); i++)
+	{
+		for (int x = 0; x < 3;x++) {
+			cout << fatura_liste[i][x] <<" ";
+		}
+	}
+}
+
+
+void kiyafet_toplu() {
+	kategori();
+	id();
+	kiyafet_adi();
+	fiyat();
+	boyut();
+	renk();
+
+
+
+}
+
+void indirimkodu_yaz() {
+	cout << "indirim kodu gir." << endl;
+	string kod;
+	cin >> kod;
+	fstream kodlar;
+	kodlar.open("indirimkodu.txt", ios::app);
+	if (kodlar.is_open())
+	{
+
+		kodlar << kod;
+		kodlar << endl;
+		kodlar.close();
+	}
+}
+
+void function(int dec, string category, vector<vector<string>> kiyafet_list)
+{
+
+	int secim;
+	int flag = 0;
+	string sec;
+	vector<string> liste;
+	vector<string> siparis;
+	vector<vector<string>> siparis_list;
+
+
+
+	for (int i = 0; i < kiyafet_list.size(); i++)
+	{
+
+		flag = 0;
+		if (category == kiyafet_list[i][0]) {
+
+			for (int n = 0; n < liste.size(); n++)
+			{
+
+				if (kiyafet_list[i][2] == liste[n]) {
+					flag = 1;
+					continue;
+				}
+			}
+
+			if (flag == 0) {
+				cout << "isim:" << kiyafet_list[i][2] << " " << "fiyat:" << kiyafet_list[i][3] << " " << endl;
+			}
+
+			liste.push_back(kiyafet_list[i][2]);
+
+		}
+	}
+
+
+
+
+	while (true)
+	{
+		cout << "secmek istediginiz kiyafetin adini giriniz" << endl;
+		cin >> secim;
+		string secim_str = to_string(secim);
+
+		cout << "sectiginiz urune ait uygun renk ve bedenler" << endl << endl;
+
+		for (int i = 0; i < kiyafet_list.size(); i++) {
+
+			if (secim_str == kiyafet_list[i][2] && category == kiyafet_list[i][0]) {
+
+
+				cout << kiyafet_list[i][1] << ")" << " beden:" << kiyafet_list[i][4] << " renk:" << kiyafet_list[i][5] << endl;
+
+			}
+
+
+		}
+
+		int satir = 0;
+		while (true)
+		{
+
+			cout << "istediginiz urunun id'sini giriniz " << endl << "alisverisi tamamladiysaniz sifira basiniz" << endl;
+			cin >> sec;
+			if (sec == "0") {
+				break;
+			}
+			for (int i = 0; i < kiyafet_list.size(); i++)
+			{
+
+				if (sec == kiyafet_list[i][1]) {
+
+					siparis.push_back(kiyafet_list[i][0]); siparis.push_back(kiyafet_list[i][1]); siparis.push_back(kiyafet_list[i][2]); siparis.push_back(kiyafet_list[i][3]); siparis.push_back(kiyafet_list[i][4]); siparis.push_back(kiyafet_list[i][5]);
+
+					siparis_list.push_back(siparis);
+					siparis.clear();
+					break;
+
+				}
+
+			}
+
+		}
+		Siparis obj(siparis_list);
+		fatura_kayit(obj,"Mert");
+		break;
+
+	}
+
+
+}
+
+void kiyafet_satinal()
+{
+	int decision = 0;
+	int ana_menu = 1;
+	int kategor = 0;
+	int go;
+	string category;
+	vector<vector<string>> kiyafet_list;
+	kiyafet_list = kiyafet_yaz(kiyafet_list);
+	while (true)
+	{
+		if (ana_menu == 1) {
+			cout << "1) Kiyafet kategorilerinin yer aldigi dosyalara urun girisinin yaptirilmasi" << endl;
+			cout << "2) Kiyafet kategorilerinin gosterimi ve urun secimi" << endl;
+		}
+		cin >> decision;
+
+
+		if (decision == 1) {
+			ana_menu = 0;
+			kiyafet_toplu();
+
+		}
+		else if (decision == 2) {
+			cout << "1)elbise" << endl << "2)tshirt" << endl << "3)pantalon" << endl << "4)gomlek" << endl << "5)etek" << endl << "6)ayakkabi" << endl;
+			cout << "kategori seciniz";
+			cin >> go;
+			if (go == 1) {
+				category = "elbise";
+				function(go, category, kiyafet_list);
+			}
+			else if (go == 2) {
+				category = "tshirt";
+				function(go, category, kiyafet_list);
+			}
+			else if (go == 3) {
+				category = "pantolon";
+				function(go, category, kiyafet_list);
+			}
+			else if (go == 4) {
+				category = "gomlek";
+				function(go, category, kiyafet_list);
+			}
+			else if (go == 5) {
+				category = "etek";
+				function(go, category, kiyafet_list);
+			}
+			else if (go == 6) {
+				category = "ayakkabi";
+				function(go, category, kiyafet_list);
+			}
+		}
+		break;
+
+	}
+
+
+
+}
+
+
+
+
+//****Mert****
 bool is_email_valid(string& email)  // e mail validation icin gerekli olan fonksiyon
 {
 	// define a regular expression
@@ -63,23 +562,18 @@ string getpass(const char* prompt, bool show_asterisk = true) // sifre maskeleme
 	//cout << password << endl;
 }
 
-vector<string> splitstr(string str, string deli = " ") // split fonksiyonu
-{
-	vector<string> liste;
-	int start = 0;
-	int end = str.find(deli);
-	while (end != -1) {
-		liste.push_back(str.substr(start, end - start));
-		start = end + deli.size();
-		end = str.find(deli, start);
-	}
-	liste.push_back(str.substr(start, end - start));
-	return liste;
-}
 
 
 
 // class'lar (tam degil, duzensiz ve taslak halinde) ++++++++++
+class Zaman
+{
+private:
+	int saat;
+	int dakika;
+public:
+};
+
 
 class Kisi
 {
@@ -155,7 +649,11 @@ private:
 	string sifre;
 };
 
-
+class Kurye : Kisi
+{
+	Zaman dagitim_bitisler;
+	int siparis_numaralari;
+};
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -434,7 +932,8 @@ void kullanici_txt() // kullanici txt parser.
 	}
 }
 
-//vector<Kullanici> kullanicilar;
+//create Kullanici vector
+vector<Kullanici> kullanicilar;
 
 void musteri_girisi()
 {
@@ -475,9 +974,8 @@ void musteri_girisi()
 		}
 	}
 	Kullanici Musteri1(kullanici_list[satir][0], kullanici_list[satir][1], kullanici_list[satir][2], kullanici_list[satir][3], kullanici_list[satir][4], kullanici_list[satir][5], kullanici_list[satir][6]);
-	//kullanicilar.push_back(Musteri1);
-	int x;
-	do {
+	kullanicilar.push_back(Musteri1);
+		int x;
 		cout << "Lutfen erismek istediginiz menunun numarasini tuslayiniz" << endl << endl;
 		cout << "1 - Kiyafet satin al" << endl;
 		cout << "2 - Siparis takip" << endl;
@@ -488,7 +986,7 @@ void musteri_girisi()
 		switch (x)
 		{
 		case 1:
-			//kategoriler
+			kiyafet_satinal();
 			break;
 		case 2:
 			//kategoriler
@@ -526,13 +1024,13 @@ void musteri_girisi()
 					continue;
 				}
 			}
+			cout << "Sifreniz degistirildi."<<endl;
 			Musteri1.sifre_degistir(password);
 			break; }
 		case 5:
+			//kategoriler
 			break;
 		}
-	} while (x != 5);
-
 }
 
 
@@ -583,26 +1081,23 @@ void yonetici_girisi()
 	cout << "4 - Kullaniciya indirim kodu tanimlanmasi" << endl;
 	cout << "5 - Yapilan siparislerin faturalarinin goruntulenmesi" << endl;
 	cout << "6 - Geri menu" << endl;
-	cin >> x;
+	cin >> x;	
 	switch (x)
 	{
 	case 1:
-		//kategoriler
+		kiyafet_toplu();
 		break;
 	case 2:
-		int sayi;
-		cout << "Sirketinizde kac kurye calisiyor" << endl;
-		cin >> sayi;
-		kurye_ekle(sayi);
+		//kategoriler
 		break;
 	case 3:
 		void oneri_oku();
 		break;
 	case 4:
-		//kategoriler
+		indirimkodu_yaz();
 		break;
 	case 5:
-		//kategoriler
+		faturalari_goruntule();
 		break;
 	case 6:
 		//kategoriler
@@ -650,112 +1145,6 @@ void oneri_yaz()
 int main()
 {
 	kullanici_txt();
-	musteri_girisi();
-
-	//while (true)
-	//{
-	//	int x;
-	//	cout << "Lutfen Gitmek Istediginiz Secenegi Tuslayiniz\n" << endl;
-	//	cout << "1 - Sisteme Giris" << endl;
-	//	cout << "2 - Uye Kaydi" << endl;
-	//	cout << "3 - Cikis" << endl;
-	//	cin >> x;
-
-	//	switch (x)
-	//	{
-	//	case 1: //sisteme giris
-	//		int x;
-	//		cout << "1 - Yonetici Girisi" << endl;
-	//		cout << "2 - Musteri Girisi" << endl;
-	//		cout << "3 - Ust Menuye Geri Don" << endl;
-	//		cin >> x;
-	//		switch (x)
-	//		{
-	//		case 1: //yonetici girisi //yonetici.txt'den okunacak
-	//			int x;
-	//			cout << "1 - Kiyafet Urun Girisi" << endl;
-	//			cout << "2 - Sisteme Kurye Ekleme" << endl;
-	//			cout << "3 - Sikayet ve Oneri Okuma" << endl;
-	//			cout << "4 - Indirim Kodu Tanimlama" << endl;
-	//			cout << "5 - Siparislerin Faturalarini Goruntuleme" << endl;
-	//			cout << "6 - Ust Menuye Geri Don" << endl;
-	//			cin >> x;
-	//			switch (x)
-	//			{
-	//			case 1:
-	//				//kiyafet kategorilerinin yer aldigi dosyalara urun girisi yaptirilmasi
-	//				break;
-	//			case 2:
-	//				//sisteme kurye eklenmesi
-	//				break;
-	//			case 3:
-	//				//sikayet ve onerilerin okunmasi
-
-	//				break;
-	//			case 4:
-	//				//kullaniciya inidirim kodu tanimlanmasi
-	//				break;
-	//			case 5:
-	//				//yapilan siparislerin faturalarinin goruntulenmesi
-	//				break;
-	//			case 6:
-	//				//Ust Menuye Geri Donus
-	//				break;
-	//			default:
-	//				break;
-	//			}
-	//			break;
-	//		case 2: //musteri girisi //kullanicilar.txt'den okunacak
-	//			int y;
-	//			cout << "1 - Kiyafetler" << endl;
-	//			cout << "2 - Siparis Takip" << endl;
-	//			cout << "3 - Sikayet ve Oneri" << endl;
-	//			cout << "4 - Sifre Degistir" << endl;
-	//			cout << "5 - Ust Menuye Geri Don" << endl;
-	//			cin >> y;
-	//			switch (y)
-	//			{
-	//			case 1:
-	//				//elbise,tisort,pantolon,gomlek,etek,ayakkabi } 6 kategori
-	//				//bu kategorideki urun ve urun bilgileri gosterilecek
-	//				//kullanici istedigi secimleri yapabilecek
-	//				//birden cok kiyafet secebilir
-	//				//sectikten sonra kiyafet ozellestir menusu acilacak ve buradaki renk ve beden bilgisine gore secimi tamamlayacaktir
-	//				//tum secimler tamamlaninca fatura olusturulacak // Fatura: Musteri adi, urun siparis zamanim siparis bilgileri, fiyat bilgisi.
-	//				break;
-	//			case 2:
-	//				//siparis bilgileri ve siparisin ulasim suresi gosterilecek
-	//				//ulasim suresi: yoneticinin belirledigi kurye sayisi ve gonderilecek adrese gore ayarlanacaktir
-	//				break;
-	//			case 3:
-	//				//Musterilerin feedback'i oneri.txt dosyasina yazilacak
-	//				//feedbackler yonetici tarafindan goruntulenebilecek
-	//				break;
-	//			case 4:
-	//				//musteri kendi sifresini degistirebilecek
-	//				break;
-	//			case 5:
-	//				//Ust Menuye Geri Donus
-	//				break;
-	//			default:
-	//				break;
-	//			}
-	//			break;
-	//		case 3:
-	//			//Ust Menuye Geri Donus
-	//			break;
-	//		default:
-	//			break;
-	//		}
-	//		break;
-	//	case 2: //uye kaydi
-	//		uye_kaydi();
-	//		break;
-	//	case 3:
-	//		//programdan cikis
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//}
+	yonetici_txt();
+	kod_liste_olustur();
 }
