@@ -1,0 +1,12 @@
+etek|1|1|15.15|50|yesil
+etek|2|1|99|31|sari
+pantolon|3|3|150|35|mavi
+etek|4|4|200|45|sari
+pantolon|5|3|305|32|siyah
+elbise|6|3|305|32|siyah
+elbise|7|15|199|32|yesil
+elbise|8|15|199|32|sari
+elbise|9|15|199|32|kirmizi
+elbise|10|15|199|35|sari
+elbise|11|6|178|67|kahverengi
+elbise|12|6|99|25|turuncu
