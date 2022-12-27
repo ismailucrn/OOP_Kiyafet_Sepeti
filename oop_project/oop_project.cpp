@@ -906,6 +906,39 @@ void uye_kaydi()
 }
 /////////////////////////////////////////////// uye kaydi kismi bitti
 
+
+
+void oneri_oku()
+{
+	fstream myFile;
+	myFile.open("oneriler.txt", ios::in);
+	if (myFile.is_open())
+	{
+		string line;
+		while (getline(myFile, line))
+		{
+			cout << line << endl;
+		}
+		myFile.close();
+	}
+}
+void oneri_yaz()
+{
+	cout << "lutfen sikayet veya onerinizi yaziniz." << endl;
+	string kullanici_adi;
+	getline(cin, kullanici_adi);
+
+	fstream myFile;
+	myFile.open("oneriler.txt", ios::app);
+	if (myFile.is_open())
+	{
+		myFile << kullanici_adi;
+	}
+}
+
+
+
+
 //...................... kullanici ve yonetici giris ..........................
 vector<vector<string>> kullanici_list;
 void kullanici_txt() // kullanici txt parser.
@@ -984,7 +1017,7 @@ void musteri_girisi()
 		//kategoriler
 		break;
 	case 3:
-		void oneri_yaz();
+		oneri_yaz();
 		break;
 		{case 4:
 			int lower = 0;
@@ -1085,7 +1118,7 @@ void yonetici_girisi()
 		//kategoriler
 		break;
 	case 3:
-		void oneri_oku();
+		oneri_oku();
 		break;
 	case 4:
 		indirimkodu_yaz();
@@ -1099,38 +1132,6 @@ void yonetici_girisi()
 	}
 bitir:;
 }
-
-
-
-void oneri_oku()
-{
-	fstream myFile;
-	myFile.open("oneriler.txt", ios::in);
-	if (myFile.is_open())
-	{
-		string line;
-		while (getline(myFile, line))
-		{
-			cout << line << endl;
-		}
-		myFile.close();
-	}
-}
-void oneri_yaz()
-{
-	cout << "lutfen sikayet veya onerinizi yaziniz." << endl;
-	string kullanici_adi;
-	getline(cin, kullanici_adi);
-
-	fstream myFile;
-	myFile.open("oneriler.txt", ios::app);
-	if (myFile.is_open())
-	{
-		myFile << kullanici_adi;
-	}
-}
-
-
 
 
 int main()
